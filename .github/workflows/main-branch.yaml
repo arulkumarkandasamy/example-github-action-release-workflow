@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   perform:
-    uses: arulkumarkandasamy/github-actions-workflows/.github/workflows/complex-workflow-main-branch.yml@main
+    uses: ./.github/workflows/complex-workflow-main-branch.yml@main
     with:
       organization: "${{ github.event.repository.owner.login }}"
       repository: "${{ github.event.repository.name }}"
