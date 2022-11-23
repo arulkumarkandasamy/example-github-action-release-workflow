@@ -1,0 +1,22 @@
+name: Hotfix branch
+on:
+  pull_request:
+    branches: [ 'release/**' ]
+    types: [opened, synchronize, reopened, closed, labeled, unlabeled]
+
+permissions:
+  pull-requests: write
+  deployments: write
+
+jobs:
+  perform:
+    uses: cloudposse/github-actions-workflows/.github/workflows/complex-workflow-hotfix-branch.yml@main
+    with:
+      organization: "${{ github.event.repository.owner.login }}"
+      repository: "${{ github.event.repository.name }}"
+      open: ${{ github.event.pull_request.state == 'open' }}
+      labels: ${{ toJSON(github.event.pull_request.labels.*.name) }}
+      ref: ${{ github.event.pull_request.head.ref  }}
+      registry: 252494810635.dkr.ecr.us-east-2.amazonaws.com
+    secrets:
+      github-private-actions-pat: "${{ secrets.PUBLIC_REPO_ACCESS_TOKEN }}"
